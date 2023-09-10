@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% block title %} Home {% endblock title %}
+{% block body %}
+<div class="main_body">
+  <div class="row p-3 m-0">
+    <div class="col-6 col-md-3 p-0 m-0">
+      <div class="d-flex">
+        <img src="../static/logo.png" alt="" width="50">
+        <a href="/" class="my-auto" style="text-decoration: none; color: black;">
+          <h5 class="fw-bold">My Notes</h5>
+        </a>
+      </div>
+    </div>
+    <div class="col-6 col-md-6 p-0 m-auto">
+      <form class="nosubmit my-auto">
+        <input class="nosubmit" type="search" placeholder="Search..." id="searchInput">
+      </form>
+    </div>
+    <div class="col-12 col-md-3 ps-5 m-auto">
+      <div class="d-flex justify-content-end">
+        <label for="colorPicker" class="my-auto pe-2">Theme Color</label>
+        <input type="color" id="colorPicker" class="my-auto me-4" value="#71d7ac">
+        <img src="../static/prashant1.png" alt="" class="user">
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="row p-3 m-0">
+      <div class="col-12 col-md-5">
+        <div class="d-flex justify-content-between">
+            <h3 class="heading">Notes</h3>
+            <img src="../static/layout.png" alt="" width="45" class="my-auto me-3" id="toggleLayoutButton">
+        </div>
+        <div class="card_cont">
+          <div class="row m-0 p-0">
+            {% if allTodo|length == 0 %}
+            <div class="col-12">
+              <div class="alert alert-warning m-1" role="alert">
+                  <b>Note : </b>No Notes Found. Add Your First Note Now
+              </div>
+            </div>
+              {% else %}
+              {% for todo in allTodo %}
+              <div class="col-12 layout_id">
+              <div class="notes_card" id="{{todo.sno}}">
+                  <h6 class="title">{{todo.title}}</h6>
+                  <div class="snippet-container">
+                      <p class="snippet" data="{{todo.desc}}">{{todo.desc}}</p>
+                  </div>
+                  <p class="time">{{todo.date_created | format_datetime}}</p>
+              </div>
+            </div>
+              {% endfor %}
+              {% endif %}
+          </div>
+            <!--  -->
+        </div>
+    </div>
+    
+
+      <div class="col-12 col-md-7">
+        <div class="right_col shadow">
+          <div class="d-flex justify-content-between">
+            <h4 class="note_heading" id="rightColTitle"></h4>
+            <div class="popup-container">
+              <div class="popup-btn"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+              <div class="popup-menu">
+                <a id="updateButton" class="link">
+                  <div class="popup-item">Edit</div>
+                </a>
+                <a id="deleteButton" class="link">
+                  <div class="popup-item">Delete</div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <p class="time" id="rightColTime"></p>
+          <p class="snippet_right pt-2" id="rightColSnippet"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--  -->
+  <div>
+    <div class="add_note shadow" id="add_note_container">
+      <div class="d-flex justify-content-between">
+        <div class="d-flex">
+          <img src="../static/add_note.png" alt="" width="30">
+          <h5 class="heading ps-2">Add Notes</h5>
+        </div>
+        <i class="fa-solid fa-circle-xmark close" id="close_note"></i>
+      </div>
+      <form action="/" method="post">
+        <div class="mb-3">
+          <label for="title" class="form-label">Notes Title</label>
+          <input type="text" class="form-control" id="title" name="title">
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Notes Description</label>
+          <textarea type="text" class="form-control" id="description" name="desc" rows="10"></textarea>
+        </div>
+        <button type="submit" class="btn add_btn">Add Note</button>
+      </form>
+    </div>
+  </div>
+  <!--  -->
+  <div>
+    <div class="draw_cont shadow" id="draw_cont">
+      <div class="d-flex justify-content-between">
+        <div class="d-flex">
+          <img src="../static/art-and-design.png" alt="" width="30">
+          <h5 class="heading ps-2">Draw Anything</h5>
+        </div>
+        <i class="fa-solid fa-circle-xmark close" id="close_draw"></i>
+      </div>
+      <canvas id="myCanvas"></canvas>
+      <div class="d-flex justify-content-between"> 
+        <div class="d-flex">
+          <span id="eraser"><i class="fa-solid fa-eraser"></i></span>
+          <span id="pencil"><i class="fa-solid fa-pencil"></i></span>
+        </div>
+        <div class="group">
+          <span id="redColor" class="red colors"><i class="fa-solid fa-circle"></i></span>
+          <span id="blueColor" class="blue colors"><i class="fa-solid fa-circle"></i></span>
+          <span id="greenColor" class="green colors"><i class="fa-solid fa-circle"></i></span>
+          <span id="blackColor" class="black colors border_circle"><i class="fa-solid fa-circle"></i></span>
+        </div>
+    </div>
+    </div>
+  </div>
+
+  <button id="scrollToTopBtn" class="scroll-to-top-btn">
+    <i class="fa-solid fa-plus"></i>
+  </button>
+  <button id="draw" class="draw">
+    <i class="fa-solid fa-paintbrush"></i>
+  </button>
+</div>
+{% endblock body %}
